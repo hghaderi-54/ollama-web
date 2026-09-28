@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="ollama-web-token" content="__TOKEN__">
+  <title>ollama-web · Your local workspace</title>
+  <link rel="icon" href="/static/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <aside id="sidebar">
+    <a class="brand" href="/"><span class="brand-mark">o</span> ollama<span class="muted">/web</span></a>
+    <button id="new-chat" class="new-chat">＋ <span>New conversation</span><span class="shortcut">N</span></button>
+    <nav aria-label="Workspace"><button class="nav active" data-view="chat"><span>◈</span> Chat</button><button class="nav" data-view="models"><span>▦</span> Model library <span id="model-count" class="badge">—</span></button><button class="nav" data-view="system"><span>◉</span> System</button></nav>
+    <div class="history-label">YOUR CONVERSATIONS <button id="export" title="Export conversation history" aria-label="Export conversation history">↗</button></div>
+    <div id="history" class="history"></div>
+    <div class="sidebar-bottom"><span class="privacy-dot"></span><div>Made for your machine<small>Local models. Your conversations.</small></div></div>
+  </aside>
+  <main>
+    <header><div class="header-left"><button id="menu" aria-label="Toggle sidebar">☰</button><span id="page-title">Workspace</span><span class="header-divider">/</span><span id="page-subtitle">Chat</span></div><button id="status-pill" class="status-pill"><span id="status-dot" class="dot"></span><span id="status-text">Checking Ollama</span></button></header>
+    <section id="chat-view" class="view chat-view">
+      <div class="chat-toolbar"><label class="model-choice"><span class="tiny-label">MODEL</span><select id="model-select" aria-label="Chat model"><option value="">Discovering models…</option></select></label><button id="delete-chat" class="quiet" title="Delete this conversation">Delete chat</button></div>
+      <div id="chat-scroll" class="chat-scroll"><div id="welcome" class="welcome"><div class="hero-mark">✳</div><div class="eyebrow">A LITTLE SPACE TO THINK</div><h1>Big ideas.<br><span>Right here, locally.</span></h1><p>Your models, on your machine.<br>Ask a question, untangle a problem, or make something new.</p><div class="suggestions"><button data-prompt="Help me break down a complex topic. First, ask me what I want to understand."><span>↗</span><strong>Make it make sense</strong><small>Find clarity in a complex topic</small></button><button data-prompt="Help me brainstorm an idea. Ask me what I am working on."><span>✧</span><strong>Start with a spark</strong><small>Explore something worth making</small></button><button data-prompt="Help me improve a piece of writing. Ask me to paste my draft."><span>≋</span><strong>Find the right words</strong><small>Give your next draft a fresh look</small></button></div></div><div id="messages" class="messages" aria-live="polite" aria-relevant="additions"></div></div>
+      <div class="composer-wrap"><form id="chat-form" class="composer"><textarea id="prompt" rows="2" placeholder="Ask anything. Stay local." aria-label="Message" maxlength="100000"></textarea><div class="composer-footer"><span id="composer-hint"><span class="privacy-dot"></span> On-device conversation</span><button id="send" type="submit" class="send" title="Send message">↑</button><button id="stop" type="button" class="danger hidden">■ Stop</button></div></form><div class="composer-note">AI can make mistakes. Check important details. <span>Enter to send · Shift + Enter for a new line</span></div></div>
+    </section>
+    <section id="models-view" class="view page-view hidden"><div class="page-heading"><div class="eyebrow">YOUR LOCAL TOOLKIT</div><h1>Model library</h1><p>Find the right model for whatever comes next.</p></div><form id="pull-form" class="pull-box"><div><strong>Bring a new model home</strong><p>Enter an Ollama model name and tag to download it.</p></div><div class="pull-controls"><input id="pull-name" placeholder="e.g. llama3.2:latest" aria-label="Model to download" required maxlength="200"><button id="pull-button" class="primary">↓ Download</button><button id="cancel-pull" type="button" class="quiet hidden">Cancel</button></div><div id="pull-progress" class="hidden"><div id="pull-status" role="status"></div><progress id="pull-bar" max="100" value="0"></progress></div></form><div class="section-title"><h2>Installed models <span id="installed-total"></span></h2><button id="refresh-models" class="quiet">↻ Refresh</button></div><div id="model-list" class="model-grid"></div><div class="section-title"><h2>In memory</h2><span class="muted">Loaded models · ollama ps</span></div><div id="running-list" class="running-list"></div></section>
+    <section id="system-view" class="view page-view hidden"><div class="page-heading"><div class="eyebrow">UNDER THE HOOD</div><h1>Your local engine</h1><p>A clear view of Ollama and the machine behind it.</p></div><div class="engine-card"><div><span class="tiny-label">OLLAMA SERVER</span><h2 id="engine-state">Checking…</h2><p id="engine-version">127.0.0.1:11434</p></div><div class="engine-actions"><button class="primary" data-control="start">▶ Start</button><button class="quiet" data-control="restart">↻ Restart</button><button class="danger" data-control="stop">■ Stop</button></div></div><p class="muted lifecycle-note">Stopping Ollama also closes its tray application and interrupts work in other apps using this installation.</p><div id="system-metrics" class="metrics"></div><div class="section-title"><h2>Ollama processes</h2><span class="muted">Current Windows user</span></div><div id="process-list" class="running-list"></div><p id="platform" class="muted"></p><div class="info-box"><strong>A workspace that stays with you</strong><p>Conversation history is saved in this browser on this device. Export a backup using the arrow beside “Your conversations.” Model downloads require internet access.</p></div></section>
+  </main>
+  <div id="toast" class="toast hidden" role="status"></div>
+  <dialog id="confirm-dialog"><form method="dialog"><div class="dialog-icon">!</div><h2 id="confirm-title">Are you sure?</h2><p id="confirm-description"></p><div class="dialog-actions"><button value="cancel" class="quiet" autofocus>Cancel</button><button value="confirm" id="confirm-button" class="danger">Confirm</button></div></form></dialog>
+</body>
+</html>
